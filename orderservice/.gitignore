@@ -32,3 +32,5 @@ build/
 /mvnw
 /mvnw.cmd
 /mvnw
+
+.DS_Store
