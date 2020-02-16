@@ -1,3 +1,26 @@
 server:
+  port: 8080
   servlet:
-    context-path: /sbaadmin
+    context-path: "/sbaadmin"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  server:
+    port: 8080
+
+
+spring:
+  cloud:
+    kubernetes:
+      discovery:
+        service-labels:
+          type: "spring-boot"
+
+  boot:
+    admin:
+      context-path: "/sbaadmin"
+      discovery:
+        enabled: false
+
