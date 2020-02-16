@@ -1,0 +1,8 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: orderservice-ingress
+spec:
+  backend:
+    serviceName: orderservice-service
+    servicePort: 8081

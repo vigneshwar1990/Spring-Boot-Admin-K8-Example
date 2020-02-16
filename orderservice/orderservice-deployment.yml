@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: demo
+  name: orderservice-pod
+  labels:
+    app: orderservice
+    type: spring-boot
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: orderservice
+    spec:
+      containers:
+        - image: localhost:32000/orderservice3:registry
+          name: orderservice
+          env:
+            - name: management.endpoints.web.exposure.include
+              value: "*"
+            - name: management.endpoint.health.show-details
+              value: "always"
+          ports:
+            - containerPort: 8081
+          resources: {}
+          readinessProbe:
+            httpGet:
+              path: orderservice/actuator/health
+              port: 8081
+            initialDelaySeconds: 30
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+          livenessProbe:
+            httpGet:
+              path: orderservice/actuator/health
+              port: 8081
+            initialDelaySeconds: 30
+            timeoutSeconds: 2
+            periodSeconds: 8
+            failureThreshold: 5
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: orderservice

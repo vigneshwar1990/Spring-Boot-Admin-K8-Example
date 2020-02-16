@@ -1,0 +1,7 @@
+server:
+  servlet:
+    context-path: "/orderservice"
+  port: 8081
+spring:
+  application:
+    name: orderservice
