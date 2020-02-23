@@ -1,15 +1,15 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: order-ingress
+  name: shopping-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: order-demo.info
+    - host: shopping-demo.info
       http:
         paths:
           - path: /
             backend:
-              serviceName: orderservice-service
-              servicePort: 8081
+              serviceName: sbaadmin-service
+              servicePort: 8080

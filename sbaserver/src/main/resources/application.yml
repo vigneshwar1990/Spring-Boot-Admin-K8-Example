@@ -1,26 +1,19 @@
-server:
-  port: 8080
-  servlet:
-    context-path: "/sbaadmin"
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  server:
-    port: 8080
-
-
 spring:
   cloud:
     kubernetes:
       discovery:
+        catalogServicesWatchDelay: 5000
         service-labels:
-          type: "spring-boot"
+          type: spring-boot
 
   boot:
     admin:
+      monitor:
+        status-interval: 3s
+        status-lifetime: 3s
       context-path: "/sbaadmin"
-      discovery:
-        enabled: false
 
+server:
+  servlet:
+    context-path: "/admin"
+  port: 8080

@@ -5,3 +5,13 @@ server:
 spring:
   application:
     name: orderservice
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  server:
+    servlet:
+      context-path: "/"
+    port: 9080

@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: demo
-  name: admin-pod
+  namespace: shopping
+  name: sbaadmin-pod
   labels:
     app: sbaadmin
     type: spring-boot
@@ -15,28 +15,33 @@ spec:
     spec:
       serviceAccountName: sbaadmin
       containers:
-        - image: localhost:32000/sbaadminv3:registry
-          name: sbaadminv3
+        - image: localhost:32000/sbaserver:latest
+          name: sbaserver
           env:
+            - name: management.server.port
+              value: "9080"
             - name: management.endpoints.web.exposure.include
               value: "*"
             - name: management.endpoint.health.show-details
               value: "always"
+            - name: spring.cloud.kubernetes.discovery.primary-port-name
+              value: "management"
           ports:
             - containerPort: 8080
+            - containerPort: 9080
           resources: {}
           readinessProbe:
             httpGet:
-              path: sbaadmin/actuator/health
-              port: 8080
+              path: /actuator/health
+              port: 9080
             initialDelaySeconds: 80
             timeoutSeconds: 2
             periodSeconds: 5
             failureThreshold: 5
           livenessProbe:
             httpGet:
-              path: sbaadmin/actuator/health
-              port: 8080
+              path: /actuator/health
+              port: 9080
             initialDelaySeconds: 80
             timeoutSeconds: 2
             periodSeconds: 8
